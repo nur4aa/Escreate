@@ -1,15 +1,15 @@
-import React, { Fragment, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { getBoard, moveCard, moveList } from '../../actions/board';
-import { CircularProgress, Box } from '@material-ui/core';
-import BoardTitle from '../board/BoardTitle';
-import BoardDrawer from '../board/BoardDrawer';
-import List from '../list/List';
-import CreateList from '../board/CreateList';
-import Members from '../board/Members';
-import Navbar from '../other/Navbar';
+import React, { Fragment, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { getBoard, moveCard, moveList } from "../../actions/board";
+import { CircularProgress, Box } from "@material-ui/core";
+import BoardTitle from "../board/BoardTitle";
+import BoardDrawer from "../board/BoardDrawer";
+import List from "../list/List";
+import CreateList from "../board/CreateList";
+import Members from "../board/Members";
+import Navbar from "../other/Navbar";
 
 const Board = ({ match }) => {
   const board = useSelector((state) => state.board.board);
@@ -21,11 +21,11 @@ const Board = ({ match }) => {
   }, [dispatch, match.params.id]);
 
   useEffect(() => {
-    if (board?.title) document.title = board.title + ' | TrelloClone';
+    if (board?.title) document.title = board.title + " | Планда";
   }, [board?.title]);
 
   if (!isAuthenticated) {
-    return <Redirect to='/' />;
+    return <Redirect to="/" />;
   }
 
   const onDragEnd = (result) => {
@@ -33,7 +33,7 @@ const Board = ({ match }) => {
     if (!destination) {
       return;
     }
-    if (type === 'card') {
+    if (type === "card") {
       dispatch(
         moveCard(draggableId, {
           fromId: source.droppableId,
@@ -49,35 +49,39 @@ const Board = ({ match }) => {
   return !board ? (
     <Fragment>
       <Navbar />
-      <Box className='board-loading'>
+      <Box className="board-loading">
         <CircularProgress />
       </Box>
     </Fragment>
   ) : (
     <div
-      className='board-and-navbar'
+      className="board-and-navbar"
       style={{
         backgroundImage:
-          'url(' +
+          "url(" +
           (board.backgroundURL
             ? board.backgroundURL
-            : 'https://images.unsplash.com/photo-1598197748967-b4674cb3c266?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2689&q=80') +
-          ')',
+            : "https://images.unsplash.com/photo-1598197748967-b4674cb3c266?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2689&q=80") +
+          ")",
       }}
     >
       <Navbar />
-      <section className='board'>
-        <div className='board-top'>
-          <div className='board-top-left'>
+      <section className="board">
+        <div className="board-top">
+          <div className="board-top-left">
             <BoardTitle board={board} />
             <Members />
           </div>
           <BoardDrawer />
         </div>
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId='all-lists' direction='horizontal' type='list'>
+          <Droppable droppableId="all-lists" direction="horizontal" type="list">
             {(provided) => (
-              <div className='lists' ref={provided.innerRef} {...provided.droppableProps}>
+              <div
+                className="lists"
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
                 {board.lists.map((listId, index) => (
                   <List key={listId} listId={listId} index={index} />
                 ))}

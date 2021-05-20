@@ -1,12 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
-import { addCard } from '../../actions/board';
-import { Card, CardContent, TextField, Button } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import React, { useRef, useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
+import { addCard } from "../../actions/board";
+import { Card, CardContent, TextField, Button } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 
 const CreateCardForm = ({ listId, setAdding }) => {
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState("");
   const dispatch = useDispatch();
 
   const formRef = useRef(null);
@@ -17,34 +17,38 @@ const CreateCardForm = ({ listId, setAdding }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     dispatch(addCard({ title, listId }));
-    setTitle('');
+    setTitle("");
   };
 
   return (
-    <form ref={formRef} className='create-card-form' onSubmit={(e) => onSubmit(e)}>
+    <form
+      ref={formRef}
+      className="create-card-form"
+      onSubmit={(e) => onSubmit(e)}
+    >
       <Card>
-        <CardContent className='card-edit-content'>
+        <CardContent className="card-edit-content">
           <TextField
-            margin='normal'
+            margin="normal"
             fullWidth
             multiline
             required
-            label='Enter a title for this card'
+            label="Название карты"
             autoFocus
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && onSubmit(e)}
+            onKeyPress={(e) => e.key === "Enter" && onSubmit(e)}
           />
         </CardContent>
       </Card>
-      <div className='card-actions'>
-        <Button type='submit' variant='contained' color='primary'>
-          Add Card
+      <div className="card-actions">
+        <Button type="submit" variant="contained" color="primary">
+          Добавить карту
         </Button>
         <Button
           onClick={() => {
             setAdding(false);
-            setTitle('');
+            setTitle("");
           }}
         >
           <CloseIcon />

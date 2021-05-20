@@ -1,17 +1,17 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { Fragment, useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
 import {
   completeChecklistItem,
   editChecklistItem,
   deleteChecklistItem,
-} from '../../actions/board';
-import { TextField, Button } from '@material-ui/core';
-import { Checkbox, FormControlLabel } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import CloseIcon from '@material-ui/icons/Close';
-import useStyles from '../../utils/modalStyles';
+} from "../../actions/board";
+import { TextField, Button } from "@material-ui/core";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
+import EditIcon from "@material-ui/icons/Edit";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import CloseIcon from "@material-ui/icons/Close";
+import useStyles from "../../utils/modalStyles";
 
 const ChecklistItem = ({ item, card }) => {
   const classes = useStyles();
@@ -46,20 +46,23 @@ const ChecklistItem = ({ item, card }) => {
   return (
     <div className={classes.checklistItem}>
       {editing ? (
-        <form onSubmit={(e) => onEdit(e)} className={classes.checklistFormLabel}>
+        <form
+          onSubmit={(e) => onEdit(e)}
+          className={classes.checklistFormLabel}
+        >
           <TextField
-            variant='filled'
+            variant="filled"
             fullWidth
             multiline
             required
             autoFocus
             value={text}
             onChange={(e) => setText(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && onEdit(e)}
+            onKeyPress={(e) => e.key === "Enter" && onEdit(e)}
           />
           <div>
-            <Button type='submit' variant='contained' color='primary'>
-              Save
+            <Button type="submit" variant="contained" color="primary">
+              Сохранить
             </Button>
             <Button
               onClick={() => {
@@ -77,7 +80,8 @@ const ChecklistItem = ({ item, card }) => {
             control={
               <Checkbox
                 checked={
-                  card.checklist.find((cardItem) => cardItem._id === item._id).complete
+                  card.checklist.find((cardItem) => cardItem._id === item._id)
+                    .complete
                 }
                 onChange={onComplete}
                 name={item._id}
@@ -87,10 +91,17 @@ const ChecklistItem = ({ item, card }) => {
             className={classes.checklistFormLabel}
           />
           <div className={classes.itemButtons}>
-            <Button className={classes.itemButton} onClick={() => setEditing(true)}>
+            <Button
+              className={classes.itemButton}
+              onClick={() => setEditing(true)}
+            >
               <EditIcon />
             </Button>
-            <Button color='secondary' className={classes.itemButton} onClick={onDelete}>
+            <Button
+              color="secondary"
+              className={classes.itemButton}
+              onClick={onDelete}
+            >
               <HighlightOffIcon />
             </Button>
           </div>

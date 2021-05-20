@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
-import { archiveList } from '../../actions/board';
-import { Button, Menu, MenuItem } from '@material-ui/core';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import MoveList from './MoveList';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
+import { archiveList } from "../../actions/board";
+import { Button, Menu, MenuItem } from "@material-ui/core";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import MoveList from "./MoveList";
 
 const ListMenu = ({ listId }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -42,7 +42,7 @@ const ListMenu = ({ listId }) => {
             handleClose();
           }}
         >
-          Archive This List
+          Архивировать лист
         </MenuItem>
         <MenuItem>
           <MoveList listId={listId} closeMenu={handleClose} />

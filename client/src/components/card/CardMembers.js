@@ -1,9 +1,14 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
-import { addCardMember } from '../../actions/board';
-import { Checkbox, FormGroup, FormControlLabel, FormControl } from '@material-ui/core';
-import useStyles from '../../utils/modalStyles';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import PropTypes from "prop-types";
+import { addCardMember } from "../../actions/board";
+import {
+  Checkbox,
+  FormGroup,
+  FormControlLabel,
+  FormControl,
+} from "@material-ui/core";
+import useStyles from "../../utils/modalStyles";
 
 const CardMembers = ({ card }) => {
   const classes = useStyles();
@@ -13,8 +18,8 @@ const CardMembers = ({ card }) => {
 
   return (
     <div>
-      <h3 className={classes.membersTitle}>Members</h3>
-      <FormControl component='fieldset'>
+      <h3 className={classes.membersTitle}>Участники</h3>
+      <FormControl component="fieldset">
         <FormGroup>
           {boardMembers.map((member) => (
             <FormControlLabel

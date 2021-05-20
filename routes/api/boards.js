@@ -1,16 +1,16 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const auth = require('../../middleware/auth');
-const member = require('../../middleware/member');
-const { check, validationResult } = require('express-validator');
+const auth = require("../../middleware/auth");
+const member = require("../../middleware/member");
+const { check, validationResult } = require("express-validator");
 
-const User = require('../../models/User');
-const Board = require('../../models/Board');
+const User = require("../../models/User");
+const Board = require("../../models/Board");
 
 // Add a board
 router.post(
-  '/',
-  [auth, [check('title', 'Title is required').not().isEmpty()]],
+  "/",
+  [auth, [check("title", "Title is required").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -34,20 +34,20 @@ router.post(
 
       // Log activity
       board.activity.unshift({
-        text: `${user.name} created this board`,
+        text: `${user.name} доска создана`,
       });
       await board.save();
 
       res.json(board);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
     }
   }
 );
 
 // Get user's boards
-router.get('/', auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
 
@@ -59,44 +59,44 @@ router.get('/', auth, async (req, res) => {
     res.json(boards);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 });
 
 // Get a board by id
-router.get('/:id', auth, async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   try {
     const board = await Board.findById(req.params.id);
     if (!board) {
-      return res.status(404).json({ msg: 'Board not found' });
+      return res.status(404).json({ msg: "Доска не найлена" });
     }
 
     res.json(board);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 });
 
 // Get a board's activity
-router.get('/activity/:boardId', auth, async (req, res) => {
+router.get("/activity/:boardId", auth, async (req, res) => {
   try {
     const board = await Board.findById(req.params.boardId);
     if (!board) {
-      return res.status(404).json({ msg: 'Board not found' });
+      return res.status(404).json({ msg: "Доска не найлена" });
     }
 
     res.json(board.activity);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 });
 
 // Change a board's title
 router.patch(
-  '/rename/:id',
-  [auth, member, [check('title', 'Title is required').not().isEmpty()]],
+  "/rename/:id",
+  [auth, member, [check("title", "Название обязательно").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -106,14 +106,14 @@ router.patch(
     try {
       const board = await Board.findById(req.params.id);
       if (!board) {
-        return res.status(404).json({ msg: 'Board not found' });
+        return res.status(404).json({ msg: "Доска не найлена" });
       }
 
       // Log activity
       if (req.body.title !== board.title) {
         const user = await User.findById(req.user.id);
         board.activity.unshift({
-          text: `${user.name} renamed this board (from '${board.title}')`,
+          text: `${user.name} переименован (из '${board.title}')`,
         });
       }
 
@@ -123,23 +123,25 @@ router.patch(
       res.json(board);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
     }
   }
 );
 
 // Add a board member
-router.put('/addMember/:userId', [auth, member], async (req, res) => {
+router.put("/addMember/:userId", [auth, member], async (req, res) => {
   try {
-    const board = await Board.findById(req.header('boardId'));
+    const board = await Board.findById(req.header("boardId"));
     const user = await User.findById(req.params.userId);
     if (!user) {
-      return res.status(404).json({ msg: 'User not found' });
+      return res.status(404).json({ msg: "Пользователь не найлен" });
     }
 
     // See if already member of board
-    if (board.members.map((member) => member.user).includes(req.params.userId)) {
-      return res.status(400).json({ msg: 'Already member of board' });
+    if (
+      board.members.map((member) => member.user).includes(req.params.userId)
+    ) {
+      return res.status(400).json({ msg: "Уже является участником" });
     }
 
     // Add board to user's boards
@@ -147,18 +149,18 @@ router.put('/addMember/:userId', [auth, member], async (req, res) => {
     await user.save();
 
     // Add user to board's members with 'normal' role
-    board.members.push({ user: user.id, name: user.name, role: 'normal' });
+    board.members.push({ user: user.id, name: user.name, role: "normal" });
 
     // Log activity
     board.activity.unshift({
-      text: `${user.name} joined this board`,
+      text: `${user.name} Вступил в доску`,
     });
     await board.save();
 
     res.json(board.members);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 });
 

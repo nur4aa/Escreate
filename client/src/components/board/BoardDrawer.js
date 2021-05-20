@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import Moment from 'react-moment';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import Moment from "react-moment";
 
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import CloseIcon from '@material-ui/icons/Close';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ArchiveIcon from '@material-ui/icons/Archive';
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import Button from "@material-ui/core/Button";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import CloseIcon from "@material-ui/icons/Close";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ArchiveIcon from "@material-ui/icons/Archive";
 
-import ArchivedLists from './ArchivedLists';
-import ArchivedCards from './ArchivedCards';
-import useStyles from '../../utils/drawerStyles';
+import ArchivedLists from "./ArchivedLists";
+import ArchivedCards from "./ArchivedCards";
+import useStyles from "../../utils/drawerStyles";
 
 const BoardDrawer = () => {
   const classes = useStyles();
@@ -35,15 +35,15 @@ const BoardDrawer = () => {
     <div>
       <Button
         onClick={() => setOpen(true)}
-        variant='contained'
+        variant="contained"
         className={open ? classes.hide : classes.showMenuButton}
       >
-        <MoreHorizIcon fontSize='small' /> Show Menu
+        <MoreHorizIcon fontSize="small" /> Меню
       </Button>
       <Drawer
         className={open ? classes.drawer : classes.hide}
-        variant='persistent'
-        anchor='right'
+        variant="persistent"
+        anchor="right"
         open={open}
         classes={{
           paper: classes.drawerPaper,
@@ -52,7 +52,7 @@ const BoardDrawer = () => {
         {!viewingArchivedLists && !viewingArchivedCards ? (
           <div>
             <div className={classes.drawerHeader}>
-              <h3>Menu</h3>
+              <h3>Меню</h3>
               <Button onClick={handleClose}>
                 <CloseIcon />
               </Button>
@@ -63,18 +63,18 @@ const BoardDrawer = () => {
                 <ListItemIcon>
                   <ArchiveIcon />
                 </ListItemIcon>
-                <ListItemText primary={'Archived Lists'} />
+                <ListItemText primary={"Архивированые листы"} />
               </ListItem>
               <ListItem button onClick={() => setViewingArchivedCards(true)}>
                 <ListItemIcon>
                   <ArchiveIcon />
                 </ListItemIcon>
-                <ListItemText primary={'Archived Cards'} />
+                <ListItemText primary={"Архивированые карты"} />
               </ListItem>
             </List>
             <Divider />
             <div className={classes.activityTitle}>
-              <h3>Activity</h3>
+              <h3>История</h3>
             </div>
             <List>
               {activity.slice(0, activityChunks * 10).map((activity) => (
@@ -91,7 +91,7 @@ const BoardDrawer = () => {
                 disabled={activityChunks * 10 > activity.length}
                 onClick={() => setActivityChunks(activityChunks + 1)}
               >
-                View More Activity
+                Подробнее...
               </Button>
             </div>
           </div>
@@ -101,7 +101,7 @@ const BoardDrawer = () => {
               <Button onClick={() => setViewingArchivedLists(false)}>
                 <ChevronLeftIcon />
               </Button>
-              <h3>Archived Lists</h3>
+              <h3>Архивированые листы</h3>
               <Button onClick={handleClose}>
                 <CloseIcon />
               </Button>
@@ -115,7 +115,7 @@ const BoardDrawer = () => {
               <Button onClick={() => setViewingArchivedCards(false)}>
                 <ChevronLeftIcon />
               </Button>
-              <h3>Archived Cards</h3>
+              <h3>Архивированые карты</h3>
               <Button onClick={handleClose}>
                 <CloseIcon />
               </Button>

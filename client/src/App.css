@@ -1,8 +1,9 @@
+@import url("https://cdn.syncfusion/ej2/material.css");
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
 body {
@@ -373,7 +374,14 @@ body {
   margin: auto;
 }
 
-.board .lists .list-wrapper .list .cards .card .checklist-indicator .checklist-indicator-icon {
+.board
+  .lists
+  .list-wrapper
+  .list
+  .cards
+  .card
+  .checklist-indicator
+  .checklist-indicator-icon {
   margin-right: 2px;
 }
 
@@ -395,19 +403,42 @@ body {
   display: flex;
 }
 
-.board .lists .list-wrapper .list .cards .card .card-bottom .card-member-avatars {
+.board
+  .lists
+  .list-wrapper
+  .list
+  .cards
+  .card
+  .card-bottom
+  .card-member-avatars {
   display: flex;
   flex-wrap: wrap;
 }
 
-.board .lists .list-wrapper .list .cards .card .card-bottom .card-member-avatars .avatar {
+.board
+  .lists
+  .list-wrapper
+  .list
+  .cards
+  .card
+  .card-bottom
+  .card-member-avatars
+  .avatar {
   width: 30px;
   height: 30px;
   font-size: 0.8rem;
   background-color: #ddd;
 }
 
-.board .lists .list-wrapper .list .cards .card .card-bottom .card-member-avatars .avatar:hover {
+.board
+  .lists
+  .list-wrapper
+  .list
+  .cards
+  .card
+  .card-bottom
+  .card-member-avatars
+  .avatar:hover {
   background-color: #ccc;
 }
 

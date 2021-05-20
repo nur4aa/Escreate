@@ -1,30 +1,30 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const auth = require('../../middleware/auth');
-const jwt = require('jsonwebtoken');
-const { check, validationResult } = require('express-validator');
-require('dotenv').config();
+const bcrypt = require("bcryptjs");
+const auth = require("../../middleware/auth");
+const jwt = require("jsonwebtoken");
+const { check, validationResult } = require("express-validator");
+require("dotenv").config();
 
-const User = require('../../models/User');
+const User = require("../../models/User");
 
 // Get authorized user
-router.get('/', auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select("-password");
     res.json(user);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).send("Server error");
   }
 });
 
 // Authenticate user & get token
 router.post(
-  '/',
+  "/",
   [
-    check('email', 'Email is required').isEmail(),
-    check('password', 'Password is required').exists(),
+    check("email", "Почта обязательна").isEmail(),
+    check("password", "Пароль обязателен").exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -39,7 +39,7 @@ router.post(
       let user = await User.findOne({ email });
       if (!user) {
         return res.status(400).json({
-          errors: [{ msg: 'Invalid credentials' }],
+          errors: [{ msg: "Неверные учетные данные" }],
         });
       }
 
@@ -47,7 +47,7 @@ router.post(
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
         return res.status(400).json({
-          errors: [{ msg: 'Invalid credentials' }],
+          errors: [{ msg: "Неверные учетные данные" }],
         });
       }
 
@@ -67,7 +67,7 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error');
+      res.status(500).send("Server error");
     }
   }
 );
